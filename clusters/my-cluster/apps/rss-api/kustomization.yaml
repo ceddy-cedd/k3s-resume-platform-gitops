@@ -7,3 +7,5 @@ resources:
   - backend-deployment.yaml
   - backend-service.yaml
   - backend-ingress.yaml
+  - image/repository.yaml
+  - image/policy.yaml
