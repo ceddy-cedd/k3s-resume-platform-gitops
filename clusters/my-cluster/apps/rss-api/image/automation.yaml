@@ -10,7 +10,7 @@ spec:
     name: flux-system
     namespace: flux-system
   git:
-    checkout:
+    checkout: 
       ref:
         branch: main
     commit:
@@ -18,7 +18,7 @@ spec:
         name: flux-bot
         email: flux@local
       messageTemplate: |
-        feat: update rss-api image to {{range .Changed.Images}}{{.NewTag}}{{end}}
+        feat: update rss-api image
     push:
       branch: main
   update:
