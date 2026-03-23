@@ -1,0 +1,12 @@
+# policy.yaml
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: rss-api
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: rss-api
+  policy:
+    alphabetical:
+      order: asc
