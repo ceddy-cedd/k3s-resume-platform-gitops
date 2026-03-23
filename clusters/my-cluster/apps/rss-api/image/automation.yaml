@@ -1,0 +1,25 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageUpdateAutomation
+metadata:
+  name: rss-api
+  namespace: default
+spec:
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        name: flux-bot
+        email: flux@local
+      messageTemplate: |
+        feat: update rss-api image to {{range .Updated.Images}}{{.NewTag}}{{end}}
+    push:
+      branch: main
+  update:
+    path: ./clusters/my-cluster
+    strategy: Setters
