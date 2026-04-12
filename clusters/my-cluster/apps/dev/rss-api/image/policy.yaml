@@ -8,7 +8,8 @@ spec:
   imageRepositoryRef:
     name: rss-api
   filterTags:
-    pattern: '^[a-f0-9]{7}$'
+    pattern: '^build-(?P<num>[0-9]+)$'
+    extract: '$num'
   policy:
-    alphabetical:
+    numerical:
       order: asc
