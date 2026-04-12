@@ -1,0 +1,9 @@
+# clusters/my-cluster/apps/rss-api/image/repository.yaml
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: rss-api
+  namespace: flux-system
+spec:
+  image: ghcr.io/ceddy-cedd/k3s-resume-platform/rss-api
+  interval: 1m
