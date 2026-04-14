@@ -1,0 +1,23 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-latest-prod-images
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+    - name: disallow-latest-prod-images
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - prod
+      validate:
+        cel:
+          expressions:
+            - expression: "object.spec.containers.all(container, !container.image.contains(':latest'))"
+              message: "Using the mutable ':latest' tag is not allowed in prod."
+            - expression: "!has(object.spec.initContainers) || object.spec.initContainers.all(container, !container.image.contains(':latest'))"
+              message: "Using the mutable ':latest' tag in init containers is not allowed in prod."

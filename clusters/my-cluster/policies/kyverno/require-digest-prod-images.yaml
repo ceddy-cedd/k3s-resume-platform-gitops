@@ -1,0 +1,23 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-digest-prod-images
+spec:
+  validationFailureAction: Enforce
+  background: false
+  rules:
+    - name: require-digest-prod-images
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+              namespaces:
+                - prod
+      validate:
+        cel:
+          expressions:
+            - expression: "object.spec.containers.all(container, container.image.contains('@sha256:'))"
+              message: "Images in prod must use immutable digest references."
+            - expression: "!has(object.spec.initContainers) || object.spec.initContainers.all(container, container.image.contains('@sha256:'))"
+              message: "Init container images in prod must use immutable digest references."
